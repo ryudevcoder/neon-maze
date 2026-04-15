@@ -97,7 +97,7 @@ function handleDeath() {
     player.lives--;
     livesEl.textContent = player.lives;
     if (player.lives <= 0) {
-        alert('GAME OVER! Score: ' + player.score);
+        alert('FIM DE JOGO! Pontuação: ' + player.score);
         location.reload();
     } else {
         resetPositions();
@@ -198,18 +198,18 @@ function draw() {
         ctx.textAlign = 'center';
         ctx.shadowBlur = 10;
         ctx.shadowColor = '#fff';
-        ctx.fillText('PRESS ANY KEY TO START', canvas.width / 2, canvas.height / 2 - 80);
+        ctx.fillText('PRESSIONE QUALQUER TECLA PARA INICIAR', canvas.width / 2, canvas.height / 2 - 80);
         
         ctx.font = '14px "Orbitron", sans-serif';
-        ctx.fillStyle = '#00f2ff';
+        ctx.fillStyle = '#ffffff';
         const mechanics = [
-            '1. Grid-Based Movement',
-            '2. AI-Driven Enemies',
-            '3. Wraparound Tunnels',
-            '4. Power-Up Mechanics',
-            '5. Combo Multipliers',
-            '6. Lives & Respawn',
-            '7. Difficulty Progression'
+            '1. Movimento em Grid',
+            '2. Inimigos com IA',
+            '3. Túneis de Teleporte',
+            '4. Mecânica de Power-Up',
+            '5. Multiplicadores de Combo',
+            '6. Vidas e Respawn',
+            '7. Progressão de Dificuldade'
         ];
         mechanics.forEach((m, i) => {
             ctx.fillText(m, canvas.width / 2, canvas.height / 2 - 30 + (i * 25));
