@@ -13,10 +13,20 @@ export class Ghost {
         this.speed = 1.25;
         this.dir = 'UP';
         this.frightened = false;
+        this.isDead = false;
+        this.respawnTimer = 0;
         this.radius = TILE_SIZE / 2 - 2;
     }
 
     update(player) {
+        if (this.isDead) {
+            this.respawnTimer -= 16; // Approx deltaTime if not passed
+            if (this.respawnTimer <= 0) {
+                this.isDead = false;
+            }
+            return;
+        }
+
         if (this.x % TILE_SIZE === 0 && this.y % TILE_SIZE === 0) {
             this.gridX = this.x / TILE_SIZE;
             this.gridY = this.y / TILE_SIZE;
@@ -46,8 +56,12 @@ export class Ghost {
         let targetY = player.gridY;
 
         if (this.frightened) {
-            // Run to corners or random
-            return possibleDirs[Math.floor(Math.random() * possibleDirs.length)];
+            // Run away from player: choose dir that maximizes distance to player
+            return possibleDirs.reduce((best, current) => {
+                const distBest = this.getDist(this.getNextPos(best), { x: player.gridX, y: player.gridY });
+                const distCurr = this.getDist(this.getNextPos(current), { x: player.gridX, y: player.gridY });
+                return distCurr > distBest ? current : best;
+            });
         }
 
         if (this.type === 'ambush') {
@@ -118,6 +132,8 @@ export class Ghost {
     }
 
     draw(ctx, powerUpTimer = 0) {
+        if (this.isDead) return; // Don't draw if dead (or draw eyes only)
+
         let ghostColor = this.color;
         if (this.frightened) {
             ghostColor = '#0000ff'; // Scared blue
@@ -158,12 +174,24 @@ export class Ghost {
         ctx.fill();
     }
 
+    die() {
+        this.isDead = true;
+        this.respawnTimer = 3000; // 3 seconds
+        this.frightened = false;
+        this.x = this.startX * TILE_SIZE;
+        this.y = this.startY * TILE_SIZE;
+        this.gridX = this.startX;
+        this.gridY = this.startY;
+    }
+
     reset() {
         this.x = this.startX * TILE_SIZE;
         this.y = this.startY * TILE_SIZE;
         this.gridX = this.startX;
         this.gridY = this.startY;
         this.frightened = false;
+        this.isDead = false;
+        this.respawnTimer = 0;
         this.dir = 'UP';
     }
 }

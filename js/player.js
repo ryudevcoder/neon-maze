@@ -11,7 +11,7 @@ export class Player {
         this.speed = 1.25;
         this.radius = TILE_SIZE / 2 - 2;
         this.mouthOpen = 0;
-        this.mouthSpeed = 0.1;
+        this.mouthSpeed = 0.05;
         this.score = 0;
         this.combo = 0;
         this.lastComboTime = 0;
@@ -48,8 +48,12 @@ export class Player {
         this.handleWraparound();
         
         // Animation
-        this.mouthOpen += this.mouthSpeed;
-        if (this.mouthOpen > 0.2 || this.mouthOpen < 0) this.mouthSpeed *= -1;
+        if (this.dir) {
+            this.mouthOpen += this.mouthSpeed;
+            if (this.mouthOpen > 0.25 || this.mouthOpen < 0) this.mouthSpeed *= -1;
+        } else {
+            this.mouthOpen = 0.1; // Slightly open when stopped
+        }
     }
 
     canMove(dir) {

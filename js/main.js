@@ -83,7 +83,7 @@ function checkCollisions() {
 
         if (dist < TILE_SIZE * 0.8) {
             if (ghost.frightened) {
-                ghost.reset();
+                ghost.die();
                 player.score += 200;
                 window.dispatchEvent(new CustomEvent('scoreUpdate', { detail: { score: player.score, combo: player.combo } }));
             } else {
