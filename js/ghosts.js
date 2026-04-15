@@ -10,7 +10,7 @@ export class Ghost {
         this.gridY = y;
         this.color = color;
         this.type = type; // 'chase', 'ambush', 'random'
-        this.speed = 1.25;
+        this.speed = 1.0;
         this.dir = 'UP';
         this.frightened = false;
         this.radius = TILE_SIZE / 2 - 2;
