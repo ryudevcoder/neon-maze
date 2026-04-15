@@ -198,7 +198,22 @@ function draw() {
         ctx.textAlign = 'center';
         ctx.shadowBlur = 10;
         ctx.shadowColor = '#fff';
-        ctx.fillText('PRESS ANY KEY TO START', canvas.width / 2, canvas.height / 2);
+        ctx.fillText('PRESS ANY KEY TO START', canvas.width / 2, canvas.height / 2 - 80);
+        
+        ctx.font = '14px "Orbitron", sans-serif';
+        ctx.fillStyle = '#00f2ff';
+        const mechanics = [
+            '1. Grid-Based Movement',
+            '2. AI-Driven Enemies',
+            '3. Wraparound Tunnels',
+            '4. Power-Up Mechanics',
+            '5. Combo Multipliers',
+            '6. Lives & Respawn',
+            '7. Difficulty Progression'
+        ];
+        mechanics.forEach((m, i) => {
+            ctx.fillText(m, canvas.width / 2, canvas.height / 2 - 30 + (i * 25));
+        });
         ctx.shadowBlur = 0;
     }
 }

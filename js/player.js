@@ -8,7 +8,7 @@ export class Player {
         this.gridY = y;
         this.nextDir = null;
         this.dir = null;
-        this.speed = 1.0;
+        this.speed = 1.25;
         this.radius = TILE_SIZE / 2 - 2;
         this.mouthOpen = 0;
         this.mouthSpeed = 0.1;
