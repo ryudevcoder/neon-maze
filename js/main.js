@@ -16,6 +16,7 @@ let isPaused = false;
 let level = 1;
 let powerUpTimer = 0;
 let powerUpDuration = 8000; // ms
+let gameStarted = false;
 
 function init() {
     canvas.width = MAP[0].length * TILE_SIZE;
@@ -49,10 +50,16 @@ function init() {
 
 function setupControls() {
     window.addEventListener('keydown', (e) => {
+        if (!gameStarted) gameStarted = true;
         if (e.key === 'ArrowLeft') player.nextDir = 'LEFT';
         if (e.key === 'ArrowRight') player.nextDir = 'RIGHT';
         if (e.key === 'ArrowUp') player.nextDir = 'UP';
         if (e.key === 'ArrowDown') player.nextDir = 'DOWN';
+    });
+    
+    // Support for touch/click to start
+    canvas.addEventListener('mousedown', () => {
+        if (!gameStarted) gameStarted = true;
     });
 
     window.addEventListener('powerup', () => {
@@ -107,6 +114,7 @@ function resetPositions() {
     }
     player.reset(pSpawn.x, pSpawn.y);
     ghosts.forEach(g => g.reset());
+    gameStarted = false;
 }
 
 function checkWin() {
@@ -129,7 +137,7 @@ function nextLevel() {
 }
 
 function update(deltaTime) {
-    if (isPaused) return;
+    if (isPaused || !gameStarted) return;
 
     player.update();
     ghosts.forEach(g => g.update(player));
@@ -180,7 +188,19 @@ function draw() {
     }
 
     player.draw(ctx);
-    ghosts.forEach(g => g.draw(ctx));
+    ghosts.forEach(g => g.draw(ctx, powerUpTimer));
+
+    if (!gameStarted) {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#fff';
+        ctx.font = '24px "Orbitron", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = '#fff';
+        ctx.fillText('PRESS ANY KEY TO START', canvas.width / 2, canvas.height / 2);
+        ctx.shadowBlur = 0;
+    }
 }
 
 let lastTime = 0;

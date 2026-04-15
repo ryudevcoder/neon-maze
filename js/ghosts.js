@@ -10,7 +10,7 @@ export class Ghost {
         this.gridY = y;
         this.color = color;
         this.type = type; // 'chase', 'ambush', 'random'
-        this.speed = 2;
+        this.speed = 1.25;
         this.dir = 'UP';
         this.frightened = false;
         this.radius = TILE_SIZE / 2 - 2;
@@ -117,10 +117,19 @@ export class Ghost {
         if (this.x >= width) this.x = 0;
     }
 
-    draw(ctx) {
-        ctx.fillStyle = this.frightened ? '#0000ff' : this.color;
+    draw(ctx, powerUpTimer = 0) {
+        let ghostColor = this.color;
+        if (this.frightened) {
+            ghostColor = '#0000ff'; // Scared blue
+            // Flash white in the last 2 seconds
+            if (powerUpTimer < 2000 && Math.floor(powerUpTimer / 200) % 2 === 0) {
+                ghostColor = '#ffffff';
+            }
+        }
+        
+        ctx.fillStyle = ghostColor;
         ctx.shadowBlur = 15;
-        ctx.shadowColor = ctx.fillStyle;
+        ctx.shadowColor = ghostColor;
 
         const cx = this.x + TILE_SIZE / 2;
         const cy = this.y + TILE_SIZE / 2;
