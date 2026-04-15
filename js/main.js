@@ -194,11 +194,12 @@ function draw() {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = '#fff';
-        ctx.font = '16px "Orbitron", sans-serif';
+        ctx.font = '20px "Orbitron", sans-serif';
         ctx.textAlign = 'center';
         ctx.shadowBlur = 10;
         ctx.shadowColor = '#fff';
-        ctx.fillText('PRESSIONE QUALQUER TECLA PARA INICIAR', canvas.width / 2, canvas.height / 2 - 80);
+        ctx.fillText('PRESSIONE QUALQUER TECLA', canvas.width / 2, canvas.height / 2 - 110);
+        ctx.fillText('PARA INICIAR', canvas.width / 2, canvas.height / 2 - 85);
         
         ctx.font = '14px "Orbitron", sans-serif';
         ctx.fillStyle = '#ffffff';
