@@ -194,7 +194,7 @@ function draw() {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = '#fff';
-        ctx.font = '24px "Orbitron", sans-serif';
+        ctx.font = '16px "Orbitron", sans-serif';
         ctx.textAlign = 'center';
         ctx.shadowBlur = 10;
         ctx.shadowColor = '#fff';
